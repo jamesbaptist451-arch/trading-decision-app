@@ -2,6 +2,11 @@ const btcPriceEl = document.getElementById("btc-price");
 const decisionNoticias = document.getElementById("decision-noticias");
 const finalSignalEl = document.getElementById("final-signal");
 
+let priceHistory = [];
+const EMA_PERIOD = 20;
+const RSI_PERIOD = 14;
+
+
 let lastPrice = null;
 let currentNewsScore = 0;
 
