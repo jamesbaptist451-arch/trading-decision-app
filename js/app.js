@@ -12,17 +12,66 @@ let currentNewsScore = 0;
 
 // Precio BTC
 async function cargarPrecioBTC() {
+  // 1️⃣ Intentar BINANCE
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 4000);
+
     const response = await fetch(
-      "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT"
+      "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT",
+      { signal: controller.signal }
     );
+
+    clearTimeout(timeout);
+
     const data = await response.json();
     const price = parseFloat(data.price);
 
-    btcPriceEl.textContent = `$${price.toLocaleString("en-US", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    })}`;
+    actualizarPrecio(price, "Binance");
+    return;
+
+  } catch (e) {
+    console.warn("Binance no disponible, intentando CoinGecko...");
+  }
+
+  // 2️⃣ Intentar COINGECKO
+  try {
+    const response = await fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
+    );
+
+    const data = await response.json();
+    const price = data.bitcoin.usd;
+
+    actualizarPrecio(price, "CoinGecko");
+    return;
+
+  } catch (e) {
+    console.warn("CoinGecko no disponible, usando último precio...");
+  }
+
+  // 3️⃣ FALLBACK FINAL
+  const fallbackPrice = lastPrice || 43000;
+  actualizarPrecio(fallbackPrice, "Estimado");
+}
+function actualizarPrecio(price, fuente) {
+  btcPriceEl.textContent = `$${price.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  })} (${fuente})`;
+
+  // Momentum simple
+  if (lastPrice !== null) {
+    if (price > lastPrice) btcPriceEl.style.color = "green";
+    else if (price < lastPrice) btcPriceEl.style.color = "red";
+    else btcPriceEl.style.color = "gray";
+  }
+
+  lastPrice = price;
+  calcularDecisionFinal();
+}
+
+
 
     // Momentum simple
     if (lastPrice !== null) {
