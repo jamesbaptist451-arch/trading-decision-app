@@ -106,13 +106,15 @@ if (decisionEl) {
   decisionEl.textContent = decision.estado;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const decisionNoticias = document.getElementById("decision-noticias");
+console.log("APP.JS EJECUTÁNDOSE");
 
-  if (decisionNoticias) {
-    decisionNoticias.textContent = "Noticias neutrales 📊";
-  }
-});
+// prueba directa
+const decisionNoticias = document.getElementById("decision-noticias");
 
+if (decisionNoticias) {
+  decisionNoticias.textContent = "JS conectado ✅";
+} else {
+  console.log("NO se encontró #decision-noticias");
+}
 
 
