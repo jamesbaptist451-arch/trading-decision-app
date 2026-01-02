@@ -1,7 +1,5 @@
 import { analizarNoticias } from "../modules/newsEngine.js";
 document.addEventListener("DOMContentLoaded", () => {
-  const decisionNoticias = document.getElementById("decision-noticias");
-}
  const decisionNoticias = document.getElementById("decision-noticias");
 
 if (decisionNoticias) {
