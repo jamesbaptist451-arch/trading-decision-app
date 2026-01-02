@@ -38,22 +38,53 @@ async function cargarPrecioBTC() {
 }
 
 // Noticias
-function evaluarNoticias() {
-  const escenarios = [
-    { texto: "Noticias positivas 🟢", score: 1, color: "green" },
-    { texto: "Noticias mixtas 🟡", score: 0, color: "orange" },
-    { texto: "Noticias negativas 🔴", score: -1, color: "red" }
-  ];
+async function evaluarNoticias() {
+  try {
+    const response = await fetch(
+      "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
+    );
+    const data = await response.json();
 
-  const resultado = escenarios[Math.floor(Math.random() * escenarios.length)];
+    // Filtrar noticias de alto impacto USD
+    const highImpactUSD = data.filter(
+      n => n.impact === "High" && n.currency === "USD"
+    );
 
-  decisionNoticias.textContent = resultado.texto;
-  decisionNoticias.style.color = resultado.color;
-  decisionNoticias.style.fontWeight = "bold";
+    let score = 0;
 
-  currentNewsScore = resultado.score;
-  calcularDecisionFinal();
+    highImpactUSD.forEach(noticia => {
+      if (noticia.actual && noticia.forecast) {
+        if (noticia.actual > noticia.forecast) score += 1;
+        if (noticia.actual < noticia.forecast) score -= 1;
+      }
+    });
+
+    // Clasificación final
+    let texto = "Noticias mixtas 🟡";
+    let color = "orange";
+
+    if (score > 0) {
+      texto = "Noticias macro positivas 🟢";
+      color = "green";
+    } else if (score < 0) {
+      texto = "Noticias macro negativas 🔴";
+      color = "red";
+    }
+
+    decisionNoticias.textContent = texto;
+    decisionNoticias.style.color = color;
+    decisionNoticias.style.fontWeight = "bold";
+
+    currentNewsScore = score > 0 ? 1 : score < 0 ? -1 : 0;
+    calcularDecisionFinal();
+
+  } catch (error) {
+    decisionNoticias.textContent = "Noticias no disponibles";
+    decisionNoticias.style.color = "gray";
+    currentNewsScore = 0;
+  }
 }
+
 
 // Decisión final
 function calcularDecisionFinal() {
