@@ -3,7 +3,7 @@ const decisionNoticias = document.getElementById("decision-noticias");
 const finalSignalEl = document.getElementById("final-signal");
 const analysisDetailsEl = document.getElementById("analysis-details");
 
-
+let lastSignal = null;
 let priceHistory = [];
 const EMA_PERIOD = 20;
 const RSI_PERIOD = 14;
@@ -214,6 +214,8 @@ function calcularDecisionFinal() {
     } else {
       motivo = "Noticias presentes pero sin confirmación técnica";
     }
+    lanzarAlerta(signal, motivo);
+
   }
 
   // 📊 Análisis técnico cuando no hay noticias
@@ -281,4 +283,14 @@ function calcularRSI(prices, period) {
   const rs = gains / (losses || 1);
   return 100 - 100 / (1 + rs);
 }
+
+function lanzarAlerta(signal, motivo) {
+  if (signal === lastSignal) return;
+
+  if (signal === "BUY" || signal === "SELL") {
+    alert(`🔔 SEÑAL ${signal}\n\n${motivo}`);
+    lastSignal = signal;
+  }
+}
+
 
