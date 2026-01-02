@@ -2,7 +2,9 @@ const btcPriceEl = document.getElementById("btc-price");
 const decisionNoticias = document.getElementById("decision-noticias");
 const finalSignalEl = document.getElementById("final-signal");
 const analysisDetailsEl = document.getElementById("analysis-details");
+const alertStatusEl = document.getElementById("alert-status");
 
+let lastAlertSignal = null;
 let lastSignal = null;
 let priceHistory = [];
 const EMA_PERIOD = 20;
@@ -214,6 +216,8 @@ function calcularDecisionFinal() {
     } else {
       motivo = "Noticias presentes pero sin confirmación técnica";
     }
+    actualizarAlerta(signal);
+
   }
     lanzarAlerta(signal, motivo);
 
@@ -289,6 +293,23 @@ function lanzarAlerta(signal, motivo) {
   if (signal === "BUY" || signal === "SELL") {
     alert(`🔔 SEÑAL ${signal}\n\n${motivo}`);
     lastSignal = signal;
+  }
+}
+function actualizarAlerta(signal) {
+  if (signal === lastAlertSignal) return;
+
+  if (signal === "BUY") {
+    alertStatusEl.textContent = "🟢 Oportunidad de COMPRA detectada";
+    alertStatusEl.style.color = "green";
+    lastAlertSignal = signal;
+  } else if (signal === "SELL") {
+    alertStatusEl.textContent = "🔴 Señal de VENTA / Riesgo alto";
+    alertStatusEl.style.color = "red";
+    lastAlertSignal = signal;
+  } else {
+    alertStatusEl.textContent = "Sin alertas";
+    alertStatusEl.style.color = "gray";
+    lastAlertSignal = signal;
   }
 }
 
