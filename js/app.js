@@ -27,6 +27,39 @@ const noticiasDelDia = [
 // Ejecutar motor de noticias
 const resultadoNoticias = newsDecision(noticiasDelDia);
 
+const semaforo = document.getElementById("semaforo");
+const icono = document.getElementById("icono");
+const texto = document.getElementById("texto");
+
+// Reset clases
+semaforo.className = "";
+
+switch (resultadoNoticias.estado) {
+  case "BLOQUEADO":
+    semaforo.classList.add("bloqueado");
+    icono.innerText = "⛔";
+    texto.innerText = "NO TRADE · Noticias de alto impacto";
+    break;
+
+  case "BULLISH":
+    semaforo.classList.add("bullish");
+    icono.innerText = "🟢";
+    texto.innerText = "CONTEXTO BULLISH · Buscar LONG";
+    break;
+
+  case "BEARISH":
+    semaforo.classList.add("bearish");
+    icono.innerText = "🔴";
+    texto.innerText = "CONTEXTO BEARISH · Buscar SHORT";
+    break;
+
+  default:
+    semaforo.classList.add("neutral");
+    icono.innerText = "⚪";
+    texto.innerText = "NEUTRAL · Esperar confirmación";
+}
+
+
 // Ver resultado
 console.log("Resultado noticias:", resultadoNoticias);
 
