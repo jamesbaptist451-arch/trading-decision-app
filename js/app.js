@@ -6,6 +6,6 @@ if (decisionNoticias) {
   const resultado = analizarNoticias();
   decisionNoticias.textContent = resultado.texto;
   decisionNoticias.className = resultado.color;
-}
+}}
  
 
