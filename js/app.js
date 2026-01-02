@@ -214,9 +214,8 @@ function calcularDecisionFinal() {
     } else {
       motivo = "Noticias presentes pero sin confirmación técnica";
     }
-    lanzarAlerta(signal, motivo);
-
   }
+    lanzarAlerta(signal, motivo);
 
   // 📊 Análisis técnico cuando no hay noticias
   if (currentNewsScore === 0 && ema && rsi) {
