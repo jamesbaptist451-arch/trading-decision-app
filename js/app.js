@@ -36,6 +36,11 @@ async function cargarPrecioBTC() {
     }
 
     lastPrice = price;
+    priceHistory.push(price);
+if (priceHistory.length > 100) {
+  priceHistory.shift();
+}
+
     calcularDecisionFinal();
   } catch (error) {
     btcPriceEl.textContent = "Error cargando precio";
