@@ -39,7 +39,7 @@ function evaluarNoticias() {
 cargarPrecioBTC();
 evaluarNoticias();
 
-// 🔁 Actualización automática cada 30 segundos
+// 🔁 Actualización automática cada 1 segundos
 setInterval(() => {
   cargarPrecioBTC();
   evaluarNoticias();
