@@ -41,11 +41,54 @@ if (priceHistory.length > 100) {
   priceHistory.shift();
 }
 
-    calcularDecisionFinal();
-  } catch (error) {
-    btcPriceEl.textContent = "Error cargando precio";
+    function calcularDecisionFinal() {
+  if (lastPrice === null) return;
+
+  let signal = "WAIT";
+  let color = "orange";
+
+  const ema = calcularEMA(priceHistory, EMA_PERIOD);
+  const rsi = calcularRSI(priceHistory, RSI_PERIOD);
+
+  // 📰 Si hay noticias fuertes, mandan
+  if (currentNewsScore !== 0) {
+    if (currentNewsScore === 1 && btcPriceEl.style.color === "green") {
+      signal = "BUY";
+      color = "green";
+    } else if (currentNewsScore === -1 && btcPriceEl.style.color === "red") {
+      signal = "SELL";
+      color = "red";
+    }
   }
+
+  // 📊 Si NO hay noticias → análisis técnico
+  if (currentNewsScore === 0 && ema && rsi) {
+    let confirmations = 0;
+
+    if (lastPrice > ema) confirmations++;
+    if (rsi > 55) confirmations++;
+
+    if (confirmations >= 2) {
+      signal = "BUY";
+      color = "green";
+    }
+
+    confirmations = 0;
+    if (lastPrice < ema) confirmations++;
+    if (rsi < 45) confirmations++;
+
+    if (confirmations >= 2) {
+      signal = "SELL";
+      color = "red";
+    }
+  }
+
+  finalSignalEl.textContent = signal;
+  finalSignalEl.style.color = color;
+  finalSignalEl.style.fontWeight = "bold";
+  finalSignalEl.style.fontSize = "1.4em";
 }
+
 
 // Noticias
 async function evaluarNoticias() {
@@ -126,3 +169,31 @@ setInterval(() => {
   cargarPrecioBTC();
   evaluarNoticias();
 }, 30000);
+
+function calcularEMA(prices, period) {
+  if (prices.length < period) return null;
+  const k = 2 / (period + 1);
+  let ema = prices.slice(0, period).reduce((a, b) => a + b) / period;
+
+  for (let i = period; i < prices.length; i++) {
+    ema = prices[i] * k + ema * (1 - k);
+  }
+  return ema;
+}
+
+function calcularRSI(prices, period) {
+  if (prices.length < period + 1) return null;
+
+  let gains = 0;
+  let losses = 0;
+
+  for (let i = prices.length - period; i < prices.length - 1; i++) {
+    const diff = prices[i + 1] - prices[i];
+    if (diff > 0) gains += diff;
+    else losses -= diff;
+  }
+
+  const rs = gains / (losses || 1);
+  return 100 - 100 / (1 + rs);
+}
+
