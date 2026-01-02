@@ -106,6 +106,8 @@ if (decisionEl) {
   decisionEl.textContent = decision.estado;
 }
 
+alert("APP.JS REAL CARGADO");
+
 console.log("APP.JS EJECUTÁNDOSE");
 
 // prueba directa
