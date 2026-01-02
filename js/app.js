@@ -106,4 +106,13 @@ if (decisionEl) {
   decisionEl.textContent = decision.estado;
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  const decisionNoticias = document.getElementById("decision-noticias");
+
+  if (decisionNoticias) {
+    decisionNoticias.textContent = "Noticias neutrales 📊";
+  }
+});
+
+
 
