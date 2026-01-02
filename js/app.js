@@ -1,13 +1,14 @@
 const btcPriceEl = document.getElementById("btc-price");
 const decisionNoticias = document.getElementById("decision-noticias");
 
-// 1️⃣ Obtener precio BTC
+// Obtener precio BTC
 async function cargarPrecioBTC() {
   try {
     const response = await fetch(
       "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT"
     );
     const data = await response.json();
+
     const price = parseFloat(data.price).toLocaleString("en-US", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
@@ -19,7 +20,7 @@ async function cargarPrecioBTC() {
   }
 }
 
-// 2️⃣ Noticias (simulación temporal)
+// Simulación temporal de noticias
 function evaluarNoticias() {
   const escenarios = [
     { texto: "Noticias positivas 🟢", color: "green" },
@@ -37,3 +38,9 @@ function evaluarNoticias() {
 // Inicializar
 cargarPrecioBTC();
 evaluarNoticias();
+
+// 🔁 Actualización automática cada 30 segundos
+setInterval(() => {
+  cargarPrecioBTC();
+  evaluarNoticias();
+}, 30000);
