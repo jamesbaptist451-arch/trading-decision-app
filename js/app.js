@@ -1,9 +1,17 @@
-import { analizarNoticias } from "../modules/newsEngine.js";
-
 const decisionNoticias = document.getElementById("decision-noticias");
 
-if (decisionNoticias) {
-  const resultado = analizarNoticias();
+function evaluarNoticias() {
+  const escenarios = [
+    { texto: "Noticias positivas 🟢", color: "green" },
+    { texto: "Noticias mixtas 🟡", color: "orange" },
+    { texto: "Noticias negativas 🔴", color: "red" }
+  ];
+
+  const resultado = escenarios[Math.floor(Math.random() * escenarios.length)];
+
   decisionNoticias.textContent = resultado.texto;
-  decisionNoticias.className = resultado.color;
+  decisionNoticias.style.color = resultado.color;
+  decisionNoticias.style.fontWeight = "bold";
 }
+
+evaluarNoticias();
