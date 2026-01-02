@@ -57,3 +57,19 @@ section {
   background: #020617;
   color: #e5e7eb;
 }
+
+.buy {
+  color: #00c853;
+  font-weight: bold;
+}
+
+.wait {
+  color: #ffab00;
+  font-weight: bold;
+}
+
+.sell {
+  color: #d50000;
+  font-weight: bold;
+}
+
