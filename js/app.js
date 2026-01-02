@@ -196,19 +196,53 @@ function calcularDecisionFinal() {
 
   let signal = "WAIT";
   let color = "orange";
+  let motivo = "Esperando confirmaciones";
 
-  if (currentNewsScore === 1 && btcPriceEl.style.color === "green") {
-    signal = "BUY";
-    color = "green";
-  } else if (currentNewsScore === -1 && btcPriceEl.style.color === "red") {
-    signal = "SELL";
-    color = "red";
+  const ema = calcularEMA(priceHistory, EMA_PERIOD);
+  const rsi = calcularRSI(priceHistory, RSI_PERIOD);
+
+  // 📰 Noticias mandan si existen
+  if (currentNewsScore !== 0) {
+    if (currentNewsScore === 1 && btcPriceEl.style.color === "green") {
+      signal = "BUY";
+      color = "green";
+      motivo = "Noticias positivas + momentum alcista";
+    } else if (currentNewsScore === -1 && btcPriceEl.style.color === "red") {
+      signal = "SELL";
+      color = "red";
+      motivo = "Noticias negativas + momentum bajista";
+    } else {
+      motivo = "Noticias presentes pero sin confirmación técnica";
+    }
   }
 
+  // 📊 Análisis técnico cuando no hay noticias
+  if (currentNewsScore === 0 && ema && rsi) {
+    if (lastPrice > ema && rsi > 55) {
+      signal = "BUY";
+      color = "green";
+      motivo = "Precio sobre EMA + RSI fuerte";
+    } else if (lastPrice < ema && rsi < 45) {
+      signal = "SELL";
+      color = "red";
+      motivo = "Precio bajo EMA + RSI débil";
+    } else {
+      motivo = "Mercado lateral (EMA y RSI sin alineación)";
+    }
+  }
+
+  // Mostrar señal
   finalSignalEl.textContent = signal;
   finalSignalEl.style.color = color;
   finalSignalEl.style.fontWeight = "bold";
   finalSignalEl.style.fontSize = "1.4em";
+
+  // Mostrar detalles
+  analysisDetailsEl.textContent = `
+EMA(20): ${ema ? ema.toFixed(2) : "—"}
+RSI(14): ${rsi ? rsi.toFixed(1) : "—"}
+Motivo: ${motivo}
+  `;
 }
 
 // Inicializar
