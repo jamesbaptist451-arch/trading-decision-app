@@ -81,5 +81,29 @@ async function cargarPrecioBTC() {
 
 cargarPrecioBTC();
 
+import { newsDecision } from "./modules/newsEngine.js";
+
+// Simulación de noticias del día
+const noticiasDelDia = [
+  {
+    titulo: "US CPI higher than expected",
+    tipo: "MACRO",
+    impacto: "ALTO",
+    direccion: "BEARISH",
+    confianza: 0.9,
+    hora: "14:30"
+  }
+];
+
+// Evaluar automáticamente al cargar
+const decision = newsDecision(noticiasDelDia);
+
+console.log("DECISIÓN FINAL:", decision.estado);
+
+// Actualizar UI básica (texto)
+const decisionEl = document.getElementById("decision-noticias");
+if (decisionEl) {
+  decisionEl.textContent = decision.estado;
+}
 
 
