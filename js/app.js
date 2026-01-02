@@ -249,11 +249,11 @@ Motivo: ${motivo}
 cargarPrecioBTC();
 evaluarNoticias();
 
-// Actualizar cada 30s
+// Actualizar cada 10s
 setInterval(() => {
   cargarPrecioBTC();
   evaluarNoticias();
-}, 30000);
+}, 10000);
 
 function calcularEMA(prices, period) {
   if (prices.length < period) return null;
