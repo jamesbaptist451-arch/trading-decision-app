@@ -14,3 +14,10 @@ async function cargarPrecioBTC() {
 }
 
 cargarPrecioBTC();
+
+import { newsDecision } from "./modules/newsEngine.js";
+
+const resultadoNoticias = newsDecision(noticiasDelDia);
+
+console.log(resultadoNoticias);
+
