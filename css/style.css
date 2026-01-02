@@ -26,3 +26,34 @@ section {
   font-size: 1.5rem;
   font-weight: bold;
 }
+
+#semaforo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+/* Estados */
+#semaforo.bullish {
+  background: #052e16;
+  color: #22c55e;
+}
+
+#semaforo.bearish {
+  background: #450a0a;
+  color: #ef4444;
+}
+
+#semaforo.bloqueado {
+  background: #1f2933;
+  color: #facc15;
+}
+
+#semaforo.neutral {
+  background: #020617;
+  color: #e5e7eb;
+}
