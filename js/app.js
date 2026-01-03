@@ -159,9 +159,18 @@ async function evaluarNoticias() {
     let score = 0;
 
     highImpactUSD.forEach(noticia => {
-      if (noticia.actual && noticia.forecast) {
-        if (noticia.actual > noticia.forecast) score += 1;
-        if (noticia.actual < noticia.forecast) score -= 1;
+     const actual = parseFloat(
+  String(noticia.actual).replace("%", "")
+);
+const forecast = parseFloat(
+  String(noticia.forecast).replace("%", "")
+);
+
+if (!isNaN(actual) && !isNaN(forecast)) {
+  if (actual > forecast) score += 1;
+  if (actual < forecast) score -= 1;
+}
+
       }
     });
 
