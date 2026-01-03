@@ -147,7 +147,7 @@ if (priceHistory.length > 100) {
 async function evaluarNoticias() {
   try {
     const response = await fetch(
-      "https://nfs.faireconomy.media/ff_calendar_thisweek.json"
+      "https://api.allorigins.win/raw?url=https://nfs.faireconomy.media/ff_calendar_thisweek.json"
     );
     const data = await response.json();
 
