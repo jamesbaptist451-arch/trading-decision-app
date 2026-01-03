@@ -14,6 +14,11 @@ const RSI_PERIOD = 14;
 let lastPrice = null;
 let currentNewsScore = 0;
 
+let emaSignal = "WAIT";
+let rsiSignal = "WAIT";
+let newsBias = 0; // -1 negativo, 0 neutral, 1 positivo
+
+
 // Precio BTC
 async function cargarPrecioBTC() {
   // 1️⃣ Intentar BINANCE
@@ -178,6 +183,12 @@ async function evaluarNoticias() {
     if (actual > forecast) score += 1;
     if (actual < forecast) score -= 1;
   }
+  // Guardar sesgo de noticias para la señal final
+  newsBias = score > 0 ? 1 : score < 0 ? -1 : 0;
+
+  // Actualizar decisión final
+  calcularDecisionFinal();
+
 
 });
 
