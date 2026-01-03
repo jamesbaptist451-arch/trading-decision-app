@@ -313,4 +313,40 @@ function actualizarAlerta(signal) {
   }
 }
 
+function calcularRiesgo(signal, price) {
+  if (signal === "WAIT" || !price) {
+    return "Sin plan (esperando señal clara)";
+  }
+
+  // volatilidad simple: rango de los últimos 10 precios
+  const lookback = 10;
+  if (priceHistory.length < lookback) {
+    return "Recolectando datos para riesgo…";
+  }
+
+  const recent = priceHistory.slice(-lookback);
+  const high = Math.max(...recent);
+  const low = Math.min(...recent);
+  const range = high - low || price * 0.002; // fallback 0.2%
+
+  let entry = price;
+  let stop, target;
+
+  if (signal === "BUY") {
+    stop = entry - range * 0.8;
+    target = entry + range * 1.6; // R/R ≈ 1:2
+  } else if (signal === "SELL") {
+    stop = entry + range * 0.8;
+    target = entry - range * 1.6;
+  }
+
+  const rr = Math.abs((target - entry) / (entry - stop)).toFixed(2);
+
+  return `
+Entrada: ${entry.toLocaleString()}
+Stop Loss: ${stop.toLocaleString()}
+Take Profit: ${target.toLocaleString()}
+R/R: 1:${rr}
+  `;
+}
 
