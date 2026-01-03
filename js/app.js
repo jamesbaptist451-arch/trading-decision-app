@@ -176,9 +176,6 @@ async function evaluarNoticias() {
        if (actual < forecast) score -= 1;
      }
 
-      }
-    
-
     // Clasificación final
     let texto = "Noticias mixtas 🟡";
     let color = "orange";
