@@ -139,6 +139,7 @@ if (priceHistory.length > 100) {
       signal = "SELL";
       color = "red";
     }
+    calcularDecisionFinal();
   }
 
   finalSignalEl.textContent = signal;
@@ -232,21 +233,28 @@ function calcularDecisionFinal() {
   const rsi = calcularRSI(priceHistory, RSI_PERIOD);
 
   // 📰 Noticias mandan si existen
-  if (currentNewsScore !== 0) {
-    if (currentNewsScore === 1 && btcPriceEl.style.color === "green") {
+  if (newsBias !== 0) {
+    if (newsBias === 1 && emaSignal === "BUY" && rsiSignal =="BUY") {
       signal = "BUY";
       color = "green";
-      motivo = "Noticias positivas + momentum alcista";
-    } else if (currentNewsScore === -1 && btcPriceEl.style.color === "red") {
+      motivo = "Noticias positivas + confirmacion tecnica";
+    } else if (newsBias === -1 && emaSignal === "SELL" && rsiSignal == "SELL") {
       signal = "SELL";
       color = "red";
-      motivo = "Noticias negativas + momentum bajista";
+      motivo = "Noticias negativas + confirmacion tecnica";
     } else {
-      motivo = "Noticias presentes pero sin confirmación técnica";
+      signal = "SELL";
+      color = "red";
+      motivo = "Noticias presentes pero sin confirmacion tecnica";
     }
     actualizarAlerta(signal);
     const riskPlanEl = document.getElementById("risk-plan");
     riskPlanEl.textContent = calcularRiesgo(signal, lastPrice);
+    
+    finalSignalEl.textContent = signal;
+    finalSignalEl.style.color = color;
+
+    analysisDetailsEl.textContent = motivo;
 
   }
     lanzarAlerta(signal, motivo);
