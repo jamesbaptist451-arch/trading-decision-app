@@ -159,22 +159,28 @@ async function evaluarNoticias() {
     let score = 0;
 
     highImpactUSD.forEach(noticia => {
-     const actual = parseFloat(
-       String(noticia.actual)
-         .replace("%", "") 
-         .replace(",", ".")
-         .trim()
-     );
-     const forecast = parseFloat(
-       String(noticia.forecast)
-          .replace("%", "")
-          .replace(",", ".")
-          .trim()
-     );
-     if (!isNaN(actual) && !isNaN(forecast)) {
-       if (actual > forecast) score += 1;
-       if (actual < forecast) score -= 1;
-     }
+
+  const actual = parseFloat(
+    String(noticia.actual || "")
+      .replace("%", "")
+      .replace(",", ".")
+      .trim()
+  );
+
+  const forecast = parseFloat(
+    String(noticia.forecast || "")
+      .replace("%", "")
+      .replace(",", ".")
+      .trim()
+  );
+
+  if (!isNaN(actual) && !isNaN(forecast)) {
+    if (actual > forecast) score += 1;
+    if (actual < forecast) score -= 1;
+  }
+
+});
+
 
     // Clasificación final
     let texto = "Noticias mixtas 🟡";
