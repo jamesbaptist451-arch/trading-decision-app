@@ -177,7 +177,7 @@ async function evaluarNoticias() {
      }
 
       }
-    });
+    
 
     // Clasificación final
     let texto = "Noticias mixtas 🟡";
