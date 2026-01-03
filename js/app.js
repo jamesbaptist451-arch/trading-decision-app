@@ -171,7 +171,6 @@ async function evaluarNoticias() {
           .replace(",", ".")
           .trim()
      );
-
      if (!isNaN(actual) && !isNaN(forecast)) {
        if (actual > forecast) score += 1;
        if (actual < forecast) score -= 1;
