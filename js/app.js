@@ -217,9 +217,13 @@ function calcularDecisionFinal() {
       motivo = "Noticias presentes pero sin confirmación técnica";
     }
     actualizarAlerta(signal);
+    const riskPlanEl = document.getElementById("risk-plan");
+    riskPlanEl.textContent = calcularRiesgo(signal, lastPrice);
 
   }
     lanzarAlerta(signal, motivo);
+    
+
 
   // 📊 Análisis técnico cuando no hay noticias
   if (currentNewsScore === 0 && ema && rsi) {
