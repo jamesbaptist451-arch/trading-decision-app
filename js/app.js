@@ -160,16 +160,16 @@ async function evaluarNoticias() {
 
     highImpactUSD.forEach(noticia => {
      const actual = parseFloat(
-  String(noticia.actual).replace("%", "")
-);
-const forecast = parseFloat(
-  String(noticia.forecast).replace("%", "")
-);
+       String(noticia.actual).replace("%", "")     
+     );
+     const forecast = parseFloat(
+       String(noticia.forecast).replace("%", "")
+     );
 
-if (!isNaN(actual) && !isNaN(forecast)) {
-  if (actual > forecast) score += 1;
-  if (actual < forecast) score -= 1;
-}
+     if (!isNaN(actual) && !isNaN(forecast)) {
+       if (actual > forecast) score += 1;
+       if (actual < forecast) score -= 1;
+     }
 
       }
     });
