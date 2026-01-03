@@ -160,10 +160,16 @@ async function evaluarNoticias() {
 
     highImpactUSD.forEach(noticia => {
      const actual = parseFloat(
-       String(noticia.actual).replace("%", "")     
+       String(noticia.actual)
+         .replace("%", "") 
+         .replace(",", ".")
+         .trim()
      );
      const forecast = parseFloat(
-       String(noticia.forecast).replace("%", "")
+       String(noticia.forecast)
+          .replace("%", "")
+          .replace(",", ".")
+          .trim()
      );
 
      if (!isNaN(actual) && !isNaN(forecast)) {
