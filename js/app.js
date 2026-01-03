@@ -139,7 +139,6 @@ if (priceHistory.length > 100) {
       signal = "SELL";
       color = "red";
     }
-    calcularDecisionFinal();
   }
 
   finalSignalEl.textContent = signal;
