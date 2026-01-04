@@ -99,6 +99,9 @@ if (priceHistory.length > 100) {
   priceHistory.shift();
 }
 
+calcularIndicatores();
+calcularDecisionFinal();
+
     function calcularDecisionFinal() {
   if (lastPrice === null) return;
 
