@@ -1,75 +1,30 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0f172a;
-  color: #e5e7eb;
+body.dark {
+  background:#0e1117;
+  color:#eaeaea;
+  font-family:Arial, sans-serif;
 }
 
 header {
-  text-align: center;
-  padding: 20px;
-  background: #020617;
+  display:flex;
+  justify-content:space-between;
+  padding:15px;
+  background:#161b22;
 }
 
-main {
-  padding: 20px;
+.panel {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap:15px;
+  padding:20px;
 }
 
-section {
-  background: #020617;
-  margin-bottom: 20px;
-  padding: 15px;
-  border-radius: 8px;
+.box {
+  background:#161b22;
+  padding:15px;
+  border-radius:8px;
 }
 
-#btcPrecio {
-  font-size: 1.5rem;
-  font-weight: bold;
+#finalSignal {
+  font-size:22px;
+  font-weight:bold;
 }
-
-#semaforo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 15px;
-  font-size: 1.2rem;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-/* Estados */
-#semaforo.bullish {
-  background: #052e16;
-  color: #22c55e;
-}
-
-#semaforo.bearish {
-  background: #450a0a;
-  color: #ef4444;
-}
-
-#semaforo.bloqueado {
-  background: #1f2933;
-  color: #facc15;
-}
-
-#semaforo.neutral {
-  background: #020617;
-  color: #e5e7eb;
-}
-
-.buy {
-  color: #00c853;
-  font-weight: bold;
-}
-
-.wait {
-  color: #ffab00;
-  font-weight: bold;
-}
-
-.sell {
-  color: #d50000;
-  font-weight: bold;
-}
-
