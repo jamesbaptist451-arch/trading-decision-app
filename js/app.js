@@ -64,10 +64,19 @@ async function cargarPrecioBTC() {
   actualizarPrecio(fallbackPrice, "Estimado");
 }
 function actualizarPrecio(price, fuente) {
-  btcPriceEl.textContent = `$${price.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  })} (${fuente})`;
+    btcPriceEl.textContent = `$${price.toLocaleString("en-US")} (${fuente})`;
+
+    // === MOTOR DE DATOS ===
+    priceHistory.push(price);
+
+    if (priceHistory.length > 100) {
+        priceHistory.shift();
+    }
+
+    calcularIndicadores();
+    calcularDecisionFinal();
+}
+
 
   // Momentum simple
   if (lastPrice !== null) {
