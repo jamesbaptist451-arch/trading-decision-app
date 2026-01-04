@@ -25,13 +25,21 @@ function calculateEMA(data, period) {
 
 function analyze(symbol, candles) {
   const closes = candles.map(c => parseFloat(c[4]));
+  const last = closes[closes.length - 1];
+
   const ema20 = calculateEMA(closes.slice(-20), 20);
   const ema50 = calculateEMA(closes.slice(-50), 50);
 
-  if (ema20 > ema50) return { symbol, side: "LONG" };
-  if (ema20 < ema50) return { symbol, side: "SHORT" };
+  const strength = Math.abs(ema20 - ema50) / last;
+
+  if (strength < 0.002) return null; // evita lateralidad
+
+  if (ema20 > ema50) return { symbol, side: "LONG", strength };
+  if (ema20 < ema50) return { symbol, side: "SHORT", strength };
+
   return null;
 }
+
 
 function riskManagement(entry, side) {
   const riskAmount = ACCOUNT_BALANCE * RISK_PER_TRADE;
