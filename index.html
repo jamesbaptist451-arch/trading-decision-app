@@ -1,69 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Trading Pro App</title>
-
+  <meta charset="UTF-8">
+  <title>Trading Pro AI</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+<body class="dark">
 
-  
-<body>
+<header>
+  <h1>📈 Trading Pro AI</h1>
+  <span id="status">Conectado a Binance</span>
+</header>
 
-  <main>
+<section class="panel">
+  <div class="box">
+    <h2>Mejores Trades</h2>
+    <div id="bestTrades">Analizando mercado...</div>
+  </div>
 
-    <section id="price">
-      <h2>Precio BTC</h2>
-      <p id="btc-price">Cargando…</p>
+  <div class="box">
+    <h2>Señal Final</h2>
+    <div id="finalSignal">WAIT</div>
+  </div>
+
+  <div class="box">
+    <h2>Gestión de Riesgo</h2>
+    <div id="risk"></div>
+  </div>
 </section>
 
+<footer>
+  <small>No es asesoría financiera</small>
+</footer>
 
-    <section id="decision">
-      <h2>Decisión (Noticias)</h2>
-      <p id="decision-noticias">Esperando evaluacion</p>
-
-      <h3>Señal Final</h3>
-      <p id="final-signal">Calculando...</p>
-
-      <h3>Detalles del análisis</h3>
-      <p id="analysis-details">—</p>
-      <h3>Estado de alerta</h3>
-      <p id="alert-status">Sin alertas</p>
-      <h3>Gestión de Riesgo</h3>
-      <p id="risk-plan">—</p>
-
-
-
-</section>
-
-  </main>
-
-  <script src="./js/app.js"></script>
-
+<script src="app.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
