@@ -88,9 +88,6 @@ function actualizarPrecio(price, fuente) {
   lastPrice = price;
   calcularDecisionFinal();
 }
-
-
-
     // Momentum simple
     if (lastPrice !== null) {
       if (price > lastPrice) {
